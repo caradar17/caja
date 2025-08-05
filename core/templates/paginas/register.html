@@ -1,72 +1,45 @@
-{%load static%}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <link rel="stylesheet" type="text/css" href="{% static "css/lstyle.css" %}">
+{% extends "index.html" %}
+{% load static %}
 
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="menu">
-                <a href="#" class="logo">caja</a>
-                <input type="checkbox" id="menu">
-                <label for="menu">
-                    <img class="menu-icono" src="imagenes2/icons2/menu.png">
-                </label>
-                <nav class="navbar">
-                    <ul>
-                        <li> <a href="{% url "inicio" %}">Inicio</a> </li>
-                        <li> <a href="{% url "productos" %}">Productos</a> </li> 
-                        
-                    </ul>
-                </nav>
-            </div>
+{% block head %}
 
-            <div class="formulario">
-                <h1>Registro</h1>
-                <form method="post">
-                    <div class="username"> 
-                        <input type="text" required>
-                        <label>Nombre de Usuario</label>
+{% endblock head %}
+
+{% block content %}
+
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="card p-4 shadow login-card">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4">Registrarse</h1>
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="id_username" name="username" placeholder="Nombre de Usuario" required>
+                        <label for="id_username">Nombre de Usuario</label>
                     </div>
-                    <div class="username">
-                        <input type="email" required>
-                        <label>Correo Electrónico</label>            
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="id_email" name="email" placeholder="Nombre de Usuario" required>
+                        <label for="id_email">Correo Electrónico</label>
                     </div>
-                    <div class="username">
-                        <input type="password" required>
-                        <label>Contraseña</label>            
+
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="id_password" name="password" placeholder="Contraseña" required>
+                        <label for="id_password">Contraseña</label>
                     </div>
-                    <div class="username">
-                        <input type="password" required>
-                        <label>Confirma tu Contraseña</label>            
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="id_password" name="password" placeholder="Confirmar Contraseña" required>
+                        <label for="id_password">Confirmar Contraseña</label>
                     </div>
-                    <input type="submit" value="Registrar">
-                    <div class="Registrarse">
-                        ¿Ya tienes una cuenta? <a href="{% url "login" %}">Inicia Sesión aquí</a>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-custom-orange btn-lg rounded-pill">Registrarse</button>
                     </div>
-                </form>  
+                </form>
+                
+                <div class="text-center mt-3">
+                    ¿Ya tienes una cuenta? <a href="{% url "login" %}" class="link-dark">Presiona aquí</a>
+                </div>
             </div>
         </div>
-    </header>
-</body>
-<script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('regUsername').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-
-            // Guardar en Local Storage
-            localStorage.setItem('regUsername', username);
-            localStorage.setItem('regEmail', email);
-            localStorage.setItem('regPassword', password);
-
-            alert('Registro exitoso. Datos guardados en Local Storage.');
-        });
-    </script>
-</html>
+    </div>
+{% endblock content %}

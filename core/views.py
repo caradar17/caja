@@ -29,7 +29,7 @@ class IndexView(View):
 class ProductsView(View): 
     template_name = 'paginas/productos.html'
 
-    paginate_by= 10
+    paginate_by= 1
     
     def get(self,request, *args, **kwargs):
         query= request.GET.get('q')
@@ -49,6 +49,7 @@ class ProductsView(View):
         paginator = Paginator(products_imagen, self.paginate_by)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
+        print(page_obj)
 
         context= {
             "page_obj": page_obj,
