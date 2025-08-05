@@ -1,0 +1,21 @@
+{% if categories %}
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+        {% for c in categories %}
+            <div class="col">
+                <div class="text-center p-4 h-100">
+                    <img width="48px" height="48px" src="{{c.icon.url}}" alt="Icono de {{c.name}}" class="mb-3">
+                    <h3 class="fw-bold fs-5">{{c.name}}</h3>
+                    <p class="text-muted small">
+                        {{c.description}}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="col-12 text-center">
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle me-2"></i> No hay Categorías Disponibles.
+        </div>
+    </div>
+{% endif %}

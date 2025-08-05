@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %} 
+    <div class="container py-5">
+        
+        <div class="row text-center mb-2">
+            <div class="col-12">
+                <h2 class="display-4 fw-bold">Nuestros Productos</h2>
+            </div>
+        </div>
+        
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 offset-lg-2">
+                <p class="lead text-muted">
+                    Explora nuestro catálogo completo de productos. Aquí encontrarás las últimas tendencias y los artículos más populares para tu negocio.
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-6">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Buscar productos..." aria-label="Search">
+                    <button class="btn btn-warning" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row text-center mb-4">
+            <div class="col-12">
+                <a href="#" class="btn btn-outline-warning">
+                    <i class="fas fa-plus-circle me-2"></i> Añadir Nuevo Producto
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                {% include 'includes/products_list.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

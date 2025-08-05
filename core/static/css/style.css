@@ -1,0 +1,63 @@
+/* Body */
+body {
+    background: whitesmoke;
+    background: linear-gradient(to bottom right, whitesmoke, #cfcfcf);
+    height: 100%;
+}
+
+/* Login */
+.login-card {
+    max-width: 400px;
+}
+.login-card
+.btn-custom-orange {
+    background-color: #ff8c00;
+    border-color: #ff8c00;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-custom-orange:hover {
+    background-color: #e67e00;
+    border-color: #e67e00;
+}
+
+.form-floating label {
+    color: #adadad;
+}
+
+.form-floating input:focus ~ label {
+    color: #ff8c00;
+}
+
+.form-floating input:focus {
+    border-color: #ff8c00;
+    box-shadow: 0 0 0 0.25rem rgba(255, 140, 0, 0.25);
+}
+
+/* Menú y el footer */
+.navbar-nav .nav-link,
+.footer .list-unstyled a {
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+    padding: 8px 12px; 
+    border-radius: 5px; 
+}
+
+.navbar-nav .nav-link:hover,
+.footer .list-unstyled a:hover {
+    color: #fff !important; 
+    background-color: #ff8c00; 
+    transform: scale(1.05); 
+}
+
+/* Tendencia */
+.product-card-img {
+    height: 200px; 
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Categories */
+#id_categories {
+    background: linear-gradient(to right, #ff7e5f, #feb47b);  
+}

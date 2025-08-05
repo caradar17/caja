@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}		
+	<div class="header-content container-fluid">
+		<div class="row align-items-center">
+			<div class="col-md-3 col-lg-4">
+				<div class="header-txt">
+					<h1>Compra ropa <br>De Calidad Aquí </h1>
+					<p>
+						Es un hecho establecido, CAJA cuenta con la mejor variedad de ropa si quieres lucir un gran estilo. Deslumbra al resto de personas vistiendo nuestras prendas a la moda.
+					</p>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-8 text-center">
+				<div class="header-img">
+					<img src="{% static "img/images/lo.png" %}" class="img-fluid" alt="Caja - Ropa de calidad">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section id="categories" class="services container py-5">
+		<h2 class="text-center display-5 fw-bold mb-5">
+			¿Qué puedes encontrar en esta tienda digital?
+		</h2>
+		<div class="services-content">
+			{% include 'includes/categories.html' %}
+		</div>
+	</section>
+
+	<main class="container py-5">
+		<h2 class="text-center display-4 fw-bold mb-5">Tendencia</h2>
+
+		{% include 'includes/products.html'%}
+	</main>
+
+	<section class="testimonio container">	
+		<h2>Descubre tu estilo<br><br></h2>
+		<title>Videos lado a lado</title>
+		<style>
+		video {
+			width: 49%;
+			height: 350px;
+			border: 1px solid rgb(228, 227, 227);
+				}
+				h2 {
+			text-align: center;
+		}
+	</style>
+
+	<video autoplay muted loop>
+		<source src="{% static "videos/estilos.mp4" %}" type="video/mp4">
+			</video>
+			<video autoplay muted loop>
+		<source src="{% static "videos/estilos (2).mp4" %}" type="video/mp4">
+	</video>
+{% endblock content %}

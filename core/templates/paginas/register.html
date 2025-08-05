@@ -1,0 +1,72 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/lstyle.css" %}">
+
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="menu">
+                <a href="#" class="logo">caja</a>
+                <input type="checkbox" id="menu">
+                <label for="menu">
+                    <img class="menu-icono" src="imagenes2/icons2/menu.png">
+                </label>
+                <nav class="navbar">
+                    <ul>
+                        <li> <a href="{% url "inicio" %}">Inicio</a> </li>
+                        <li> <a href="{% url "productos" %}">Productos</a> </li> 
+                        
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="formulario">
+                <h1>Registro</h1>
+                <form method="post">
+                    <div class="username"> 
+                        <input type="text" required>
+                        <label>Nombre de Usuario</label>
+                    </div>
+                    <div class="username">
+                        <input type="email" required>
+                        <label>Correo Electrónico</label>            
+                    </div>
+                    <div class="username">
+                        <input type="password" required>
+                        <label>Contraseña</label>            
+                    </div>
+                    <div class="username">
+                        <input type="password" required>
+                        <label>Confirma tu Contraseña</label>            
+                    </div>
+                    <input type="submit" value="Registrar">
+                    <div class="Registrarse">
+                        ¿Ya tienes una cuenta? <a href="{% url "login" %}">Inicia Sesión aquí</a>
+                    </div>
+                </form>  
+            </div>
+        </div>
+    </header>
+</body>
+<script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('regUsername').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+
+            // Guardar en Local Storage
+            localStorage.setItem('regUsername', username);
+            localStorage.setItem('regEmail', email);
+            localStorage.setItem('regPassword', password);
+
+            alert('Registro exitoso. Datos guardados en Local Storage.');
+        });
+    </script>
+</html>
