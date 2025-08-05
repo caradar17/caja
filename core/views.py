@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
-from .models import *
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.contrib.auth import authenticate, login, get_user_model,logout
+from .models import *
+from .forms import LoginForm, RegisterForm
+from django.contrib.auth.models import User
+
 #-------------------------------------------------------------------#
 #  Index View
 #-------------------------------------------------------------------#
@@ -65,13 +69,60 @@ class LoginView(View):
     template_name = 'paginas/login.html'
     
     def get(self,request, *args, **kwargs):
-        return render(request, self.template_name)
+        if request.user.is_authenticated:
+            return redirect('inicio')
+        form=LoginForm()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self,request,*args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('inicio')
+        form=LoginForm(request.POST)
+        if form.is_valid():
+            username= form.cleaned_data['username']
+            password= form.cleaned_data['password']
+
+            user=authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+
+                return redirect('inicio')
+            else:
+                return render(request, self.template_name,{
+                    'form': form,
+                    'error_message':'Nombre de usuario o contraseña incorrectos.'
+                })
+        return render(request,self.template_name,{'form': form})
     
 #-------------------------------------------------------------------#
 #  Register View
-#-------------------------------------------------------------------#
-class RegisterView(View): 
+#-------------------------------------------------------------------#   
+
+class RegisterView(View):
     template_name = 'paginas/register.html'
     
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('inicio')
+        form= RegisterForm()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('login')
+        form= RegisterForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data['username']
+            email=form.cleaned_data['email']
+            password=form.cleaned_data['password']
+            
+            user= User.objects.create_user(username=username, email=email, password=password)
+
+            login(request, user)
+            
+            return redirect('inicio')
+        return render(request, self.template_name, {'form': form})
+class LogoutView(View):
     def get(self,request, *args, **kwargs):
-        return render(request, self.template_name)
+        logout(request)
+        return redirect('login')

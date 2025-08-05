@@ -34,7 +34,11 @@
                             <a class="nav-link" href="{% url 'productos' %}">Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                        {% if user.is_authenticated %}
+                            <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesion</a>
+                        {% else %}
+                            <p><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a> | <a class="nav-link" href="{% url 'register' %}">Registrarse</a></p>
+                        {% endif %} 
                         </li>
                     </ul>
                 </div>
