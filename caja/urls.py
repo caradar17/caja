@@ -28,6 +28,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(),name="logout"),
     path('productos/', ProductsView.as_view(),name="productos"),
     path('productos/<int:id>/', ProductDetailView.as_view(),name="product_detail"),
+
+    path('formulario_compra/', FormBuyView.as_view(),name="form_buy"),
+    path('perfil/', ProfileFormView.as_view(),name="profile_form"),
 ] 
 
 if settings.DEBUG:

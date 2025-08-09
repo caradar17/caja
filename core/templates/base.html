@@ -32,6 +32,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+                            <a class="nav-link" href="{% url 'form_buy' %}">Productos</a>
                         </li>
                         <li class="nav-item">
                             {% if user.is_authenticated %}
@@ -63,7 +64,7 @@
         <div class="container p-4">
             <div class="row">
                 <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <a href="{% url 'inicio' %}" class="text-white" style="font-weight: bold; color: #ff8c00 !important;">Caja</a>
+                    <a class="navbar-brand" href="{% url 'inicio' %}" style="font-weight: bold; color: #ff8c00;"><h1>Caja</h1></a>
                     <p class="mt-2">
                         Breve descripción de tu sitio web en el pie de página.
                     </p>
@@ -71,10 +72,10 @@
                 <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Enlaces</h5>
                     <ul class="list-unstyled mb-0">
-                        <li>
+                        <li id="footer-text">
                             <a href="{% url 'inicio' %}" class="text-white">Inicio</a>
                         </li>
-                        <li>
+                        <li id="footer-text">
                             <a href="{% url 'productos' %}" class="text-white">Productos</a>
                         </li>
                     </ul>

@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  .custom-orange-border:focus {
+    border-color: #ff8c00;
+    box-shadow: 0 0 0 0.25rem rgba(255, 140, 0, 0.25);
+  }
+</style>
+
+<main>
+  <div class="container">
+    <div class="py-5 text-center">
+      <h1 class="h2" style="color: #ff8c00;">Finalizar Compra</h1>
+      <p class="lead">
+        Completa tus datos para confirmar tu pedido y realizar el pago.
+      </p>
+    </div>
+
+    <div class="row justify-content-center g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Información del Pedido</h4>
+
+        <div class="mb-4">
+          <p class="fw-bold">¿Quién recibirá esta compra?</p>
+          <div class="form-check">
+            <input id="myself" name="deliveryOption" type="radio" class="form-check-input" checked required onclick="toggleDeliveryAddress(false)">
+            <label class="form-check-label" for="myself">Yo mismo ({{ user.first_name }})</label>
+          </div>
+          <div class="form-check">
+            <input id="another" name="deliveryOption" type="radio" class="form-check-input" required onclick="toggleDeliveryAddress(true)">
+            <label class="form-check-label" for="another">Otra persona</label>
+          </div>
+        </div>
+
+        <div id="deliveryAddressSection" style="display: none;">
+          <hr class="my-4">
+          <h4 class="mb-3">Dirección de Envío</h4>
+          <form class="needs-validation" novalidate method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="fullName" class="form-label">Nombre Completo del Destinatario</label>
+                <input type="text" class="form-control custom-orange-border" id="fullName" placeholder="" required>
+                <div class="invalid-feedback">
+                  Se requiere un nombre completo válido.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control custom-orange-border" id="email" placeholder="tu@ejemplo.com" required>
+                <div class="invalid-feedback">
+                  Por favor, introduce una dirección de correo válida para recibir actualizaciones del envío.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="address" class="form-label">Dirección</label>
+                <input type="text" class="form-control custom-orange-border" id="address" placeholder="123 Calle Principal" required>
+                <div class="invalid-feedback">
+                  Por favor, introduce la dirección de envío.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="address2" class="form-label">Dirección 2 <span class="text-body-secondary">(Opcional)</span></label>
+                <input type="text" class="form-control custom-orange-border" id="address2" placeholder="Apartamento o suite">
+              </div>
+
+              <div class="col-md-5">
+                <label for="country" class="form-label">País</label>
+                <select class="form-select custom-orange-border" id="country" required>
+                  <option value="">Elegir...</option>
+                  <option>Argentina</option>
+                  <option>Brasil</option>
+                  <option>Chile</option>
+                  <option>Colombia</option>
+                  <option>España</option>
+                  <option>Estados Unidos</option>
+                  <option>México</option>
+                  <option>Perú</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, selecciona un país válido.
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="state" class="form-label">Provincia/Estado</label>
+                <select class="form-select custom-orange-border" id="state" required>
+                  <option value="">Elegir...</option>
+                  <option>Buenos Aires</option>
+                  <option>California</option>
+                  <option>Madrid</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, proporciona una provincia o estado válido.
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="zip" class="form-label">Código Postal</label>
+                <input type="text" class="form-control custom-orange-border" id="zip" placeholder="" required>
+                <div class="invalid-feedback">
+                  Se requiere un código postal.
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <hr class="my-4">
+
+        <h4 class="mb-3">Información del Pago</h4>
+        <p class="text-secondary">Estás comprando: **{{ item.name }}**</p>
+        <p class="fw-bold fs-5">Total a pagar: **${{ item.price }}**</p>
+
+        <form class="needs-validation" novalidate method="post">
+          {% csrf_token %}
+          <div class="my-3">
+            <div class="form-check">
+              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+              <label class="form-check-label" for="credit">Tarjeta de Crédito</label>
+            </div>
+            <div class="form-check">
+              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+              <label class="form-check-label" for="debit">Tarjeta de Débito</label>
+            </div>
+            <div class="form-check">
+              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+              <label class="form-check-label" for="paypal">PayPal</label>
+            </div>
+          </div>
+
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <label for="cc-name" class="form-label">Nombre en la tarjeta</label>
+              <input type="text" class="form-control custom-orange-border" id="cc-name" placeholder="" required>
+              <small class="text-body-secondary">Nombre completo tal como aparece en la tarjeta</small>
+              <div class="invalid-feedback">
+                Se requiere el nombre en la tarjeta.
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="cc-number" class="form-label">Número de tarjeta</label>
+              <input type="text" class="form-control custom-orange-border" id="cc-number" placeholder="" required>
+              <div class="invalid-feedback">
+                Se requiere un número de tarjeta.
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cc-expiration" class="form-label">Vencimiento</label>
+              <input type="text" class="form-control custom-orange-border" id="cc-expiration" placeholder="" required>
+              <div class="invalid-feedback">
+                Se requiere la fecha de vencimiento.
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cc-cvv" class="form-label">CVV</label>
+              <input type="text" class="form-control custom-orange-border" id="cc-cvv" placeholder="" required>
+              <div class="invalid-feedback">
+                Se requiere el código de seguridad.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" style="background-color: #ff8c00; border-color: #ff8c00;" type="submit">
+            Continuar al pago de ${{ item.price }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+  function toggleDeliveryAddress(show) {
+    const deliveryAddressSection = document.getElementById('deliveryAddressSection');
+    if (show) {
+      deliveryAddressSection.style.display = 'block';
+    } else {
+      deliveryAddressSection.style.display = 'none';
+    }
+  }
+</script>
+{% endblock content %}

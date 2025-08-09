@@ -40,8 +40,16 @@ body {
 .footer .list-unstyled a {
     transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
     padding: 8px 12px; 
-    border-radius: 5px; 
+    border-radius: 5px;
+    text-decoration: none;
+    list-style: none;
+    margin: 0px 0px 5px 0px;
 }
+
+#footer-text{
+    margin-bottom: 10px;
+}
+
 
 .navbar-nav .nav-link:hover,
 .footer .list-unstyled a:hover {
@@ -57,7 +65,25 @@ body {
     width: 100%;
 }
 
+.btn-custom-orange {
+    background-color: #ff8c00;
+    border-color: #ff8c00;
+    color: #fff; /* Asegura que el texto sea blanco para que se lea bien */
+}
+
+.btn-custom-orange:hover {
+    background-color: #e67e00; /* Un color un poco más oscuro para el hover */
+    border-color: #e67e00;
+}
+
 /* Categories */
 #id_categories {
     background: linear-gradient(to right, #ff7e5f, #feb47b);  
+}
+
+
+/*Productos buscador */
+.custom-orange-border:focus {
+    border-color: #ff8c00;
+    box-shadow: 0 0 0 0.25rem rgba(255, 140, 0, 0.25);
 }
