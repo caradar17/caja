@@ -28,13 +28,15 @@
             </div>
         </div>
 
+        {% if request.user.is_staff %}
         <div class="row text-center mb-4">
             <div class="col-12">
                 <a href="#" class="btn btn-outline-warning">
                     <i class="fas fa-plus-circle me-2"></i> Añadir Nuevo Producto
                 </a>
-            </div>
+            </div>  
         </div>
+        {% endif %}
 
         <div class="row">
             <div class="col-12">

@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.contrib.auth import authenticate, login, get_user_model,logout
+from django.contrib.auth import authenticate, login,logout
 from .models import *
 from .forms import LoginForm, RegisterForm
 from django.contrib.auth.models import User
@@ -25,41 +25,6 @@ class IndexView(View):
         context= {'categories':categories,"products": products_imagen}
         print(categories)
         print(products)
-        return render(request, self.template_name,context)
-    
-#-------------------------------------------------------------------#
-#  Product View
-#-------------------------------------------------------------------#
-class ProductsView(View): 
-    template_name = 'paginas/productos.html'
-
-    paginate_by= 1
-    
-    def get(self,request, *args, **kwargs):
-        query= request.GET.get('q')
-        products = Product.objects.all()
-        if query:
-            products = products.filter(
-                Q(name__icontains=query) |
-                Q(description__icontains=query)
-            ).distinct()
-        products_imagen= []
-        for product in products: 
-            image= product.image_set.filter(is_main=True).first()
-            if not image:
-                image= product.image_set.first()
-            products_imagen.append({"product":product,"image":image})
-
-        paginator = Paginator(products_imagen, self.paginate_by)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        print(page_obj)
-
-        context= {
-            "page_obj": page_obj,
-            "products": page_obj.object_list,
-            "query": query
-            }
         return render(request, self.template_name,context)
 
 #-------------------------------------------------------------------#
@@ -126,3 +91,49 @@ class LogoutView(View):
     def get(self,request, *args, **kwargs):
         logout(request)
         return redirect('login')
+    
+#-------------------------------------------------------------------#
+#  Product View
+#-------------------------------------------------------------------#
+class ProductsView(View): 
+    template_name = 'paginas/productos.html'
+
+    paginate_by= 1
+    
+    def get(self,request, *args, **kwargs):
+        query= request.GET.get('q')
+        products = Product.objects.all()
+        if query:
+            products = products.filter(
+                Q(name__icontains=query) |
+                Q(description__icontains=query)
+            ).distinct()
+        products_imagen= []
+        for product in products: 
+            image= product.image_set.filter(is_main=True).first()
+            if not image:
+                image= product.image_set.first()
+            products_imagen.append({"product":product,"image":image})
+
+        paginator = Paginator(products_imagen, self.paginate_by)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context= {
+            "page_obj": page_obj,
+            "products": page_obj.object_list,
+            "query": query
+            }
+        return render(request, self.template_name,context)
+    
+class ProductDetailView(View): 
+    template_name = 'paginas/product_detail.html' 
+
+    def get(self, request, id, *args, **kwargs): 
+        product = get_object_or_404(Product, id=id) 
+        images= product.image_set.all()
+        context= {
+            "product": product,
+            "images": images
+        }   
+        return render(request, self.template_name, context) 

@@ -3,7 +3,13 @@
         {% for c in categories %}
             <div class="col">
                 <div class="text-center p-4 h-100">
-                    <img width="48px" height="48px" src="{{c.icon.url}}" alt="Icono de {{c.name}}" class="mb-3">
+                    <div style="width: 48px; height: 48px; margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center;">
+                        {% if c.icon %}
+                            <img width="48px" height="48px" src="{{c.icon.url}}" alt="Icono de {{c.name}}" class="mb-0">
+                        {% else %}
+                            <img width="48px" height="48px" src="https://placehold.co/48x48/e0e0e0/000000?text=Icono" alt="Icono predeterminado de {{c.name}}" class="mb-0">
+                        {% endif %}
+                    </div>
                     <h3 class="fw-bold fs-5">{{c.name}}</h3>
                     <p class="text-muted small">
                         {{c.description}}

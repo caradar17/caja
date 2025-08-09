@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center align-items-start">
+        <!-- Carrusel de imágenes a la izquierda -->
+        <div class="col-md-6">
+            <div id="carouselImagenesProducto" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for img in images %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{{ img.image.url }}" class="d-block w-100 img-fluid" alt="{{ product.name }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if images|length > 1 %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselImagenesProducto" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselImagenesProducto" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Detalles del producto a la derecha -->
+        <div class="col-md-6 order-md-2 order-1">
+            <h2 class="fw-bold mb-3">{{ product.name }}</h2>
+            {% if product.description %}
+                <p class="text-muted mb-4">{{ product.description }}</p>
+            {% else %}
+                <p class="text-muted mb-4">Sin descripción disponible.</p>
+            {% endif %}
+            <p class="fs-4 fw-bold text-success mb-3">${{ product.price }}</p>
+            <p class="mb-2"><span class="fw-semibold">Stock:</span> {{ product.stock }}</p>
+            {% if product.category %}
+                <p class="mb-2"><span class="fw-semibold">Categoría:</span> {{ product.category.name }}</p>
+            {% endif %}
+            <!-- Botón de acción -->
+            <div class="mt-4">
+                <button class="btn btn-warning btn-lg">
+                    <i class="fas fa-shopping-cart me-2"></i>Agregar al carrito
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

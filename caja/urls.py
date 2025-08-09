@@ -23,11 +23,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(),name="inicio"),
-    path('productos/', ProductsView.as_view(),name="productos"),
-
     path('login/', LoginView.as_view(),name="login"),
     path('register/', RegisterView.as_view(),name="register"),
     path('logout/', LogoutView.as_view(),name="logout"),
+    path('productos/', ProductsView.as_view(),name="productos"),
+    path('productos/<int:id>/', ProductDetailView.as_view(),name="product_detail"),
 ] 
 
 if settings.DEBUG:

@@ -14,7 +14,7 @@
                     {% if p.product.price %}
                         <p class="card-text fs-5 fw-bold text-success mb-3">${{ p.product.price }}</p>
                     {% endif %}
-                    <a href="#" class="btn **btn-warning** mt-auto">Ver Detalles</a>
+                    <a href="{% url 'product_detail' p.product.id %}" class="btn **btn-warning** mt-auto">Ver Detalles</a>
                 </div>
             </div>
         </div>
