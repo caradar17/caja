@@ -6,39 +6,47 @@
 {% endblock head %}
 
 {% block content %}
-    <div class="d-flex align-items-center justify-content-center vh-100">
-        <div class="card p-4 shadow login-card">
-            <div class="card-body">
-                <h1 class="card-title text-center mb-4">Inicio de Sesión</h1>
-                <form method="post" action="{% url 'login' %}">
-                    {% csrf_token %}
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="card p-4 shadow login-card">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4">Inicio de Sesión</h1>
+            <form method="post" action="{% url 'login' %}" >
+                {% csrf_token %}
+                {{ form.non_field_errors }}
 
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="id_username" name="username" placeholder="Nombre de Usuario" required>
-                        <label for="{{ form.username.id_for_label }}">Nombre de Usuario</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="id_password" name="password" placeholder="Contraseña" required>
-                        <label for="{{ form.password.id_for_label }}">Contraseña</label>
-                    </div>
-
-                    <div class="text-center mb-3">
-                        <a href="#" class="link-dark">¿Olvidaste tu Contraseña?</a>
-                    </div>
-
-                    {% if error_message %}
-                        <p style= "color: red;">{{ error_message}}</p>
+                <div class="form-floating mb-3">
+                    {{ form.username }}
+                    <label for="{{ form.username.id_for_label }}">Nombre de Usuario</label>
+                    {% if form.username.errors %}
+                        <div class="text-danger small">{{ form.username.errors }}</div>
                     {% endif %}
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-custom-orange btn-lg rounded-pill">Iniciar Sesión</button>
-                    </div>
-                </form>
-                
-                <div class="text-center mt-3">
-                    ¿No te has registrado? <a href="{% url "register" %}" class="link-dark">Presiona aquí</a>
                 </div>
+
+                <div class="form-floating mb-3">
+                    {{ form.password }}
+                    <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                    {% if form.password.errors %}
+                        <div class="text-danger small">{{ form.password.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="text-center mb-3">
+                    <a href="#" class="link-dark">¿Olvidaste tu Contraseña?</a>
+                </div>
+
+                {% if error_message %}
+                    <p class="text-danger">{{ error_message }}</p>
+                {% endif %}
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-custom-orange btn-lg rounded-pill">Iniciar Sesión</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                ¿No te has registrado? <a href="{% url 'register' %}" class="link-dark">Presiona aquí</a>
             </div>
         </div>
     </div>
+</div>
 {% endblock content %}

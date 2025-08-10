@@ -4,36 +4,54 @@ from django.contrib.auth.models import User
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-    label="Nombre de Usuario",
-    max_length=150,
-    widget=forms.TextInput(attrs={'placeholder': 'Tu nombre de usuario'})
+        label="Nombre de Usuario",
+        max_length=150,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Tu nombre de usuario',
+            'class': 'form-control'
+        })
     )
 
     password = forms.CharField(
-    label="Contraseña",
-    widget=forms.PasswordInput(attrs={'placeholder': 'Tu contraseña'})
+        label="Contraseña",
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Tu contraseña',
+            'class': 'form-control'
+        })
     )
 
 class RegisterForm(forms.Form):
     username = forms.CharField(
         label="Nombre de Usuario",
         max_length=150,
-        widget=forms.TextInput(attrs={'placeholder': 'Define tu nombre de usuario'})
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Define tu nombre de usuario',
+            'class': 'form-control'
+        })
     )
     
     email = forms.EmailField(
         label="Correo Electrónico",
-        widget=forms.EmailInput(attrs={'placeholder': 'Tu correo electrónico'})
+        widget=forms.EmailInput(attrs={
+            'placeholder': 'Tu correo electrónico',
+            'class': 'form-control'
+        })
     )
 
     password = forms.CharField(
         label="Contraseña",
-        widget=forms.PasswordInput(attrs={'placeholder': 'Define tu contraseña'})
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Define tu contraseña',
+            'class': 'form-control'
+        })
     )
 
     confirm_password = forms.CharField(
         label="Confirmar Contraseña",
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirma tu contraseña'})
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Confirma tu contraseña',
+            'class': 'form-control'
+        })
     )
 
     def clean_username(self):
