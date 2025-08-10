@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login,logout
 from .models import *
 from .forms import LoginForm, RegisterForm
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 #-------------------------------------------------------------------#
 #  Index View
@@ -137,3 +138,29 @@ class ProductDetailView(View):
             "images": images
         }   
         return render(request, self.template_name, context) 
+
+
+#-------------------------------------------------------------------#
+#  Form Buy View
+#-------------------------------------------------------------------#
+class FormBuyView(View, LoginRequiredMixin): 
+    template_name = 'paginas/form_buy.html'
+    login_url = '/login/' 
+
+    def get(self,request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+
+#-------------------------------------------------------------------#
+#  Profile Form View
+#-------------------------------------------------------------------#
+class ProfileFormView(View):
+    template_name = 'paginas/profile.html'
+    login_url = '/login/'  
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):    
+        return render(request, self.template_name)

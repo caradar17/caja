@@ -21,9 +21,9 @@
         <div class="row justify-content-center mb-5">
             <div class="col-md-6">
                 <form method= "GET" action= "{% url 'productos' %}" class="d-flex" role="search"> 
-                    <input class="form-control me-2" name= "q" type="search" placeholder="Buscar productos..." aria-label="Search" 
+                    <input class="form-control me-2 custom-orange-border" name= "q" type="search" placeholder="Buscar productos..." aria-label="Search" 
                     value= "{{ query|default_if_none:""}}">
-                    <button class="btn btn-warning" type="submit">Buscar</button>
+                    <button class="btn btn-custom-orange mt-auto" type="submit">Buscar</button>
                 </form>
             </div>
         </div>

@@ -3,14 +3,13 @@
 
 {% block content %}
 <div class="container py-5">
-    <div class="row justify-content-center align-items-start">
-        <!-- Carrusel de imágenes a la izquierda -->
-        <div class="col-md-6">
-            <div id="carouselImagenesProducto" class="carousel slide" data-bs-ride="carousel">
+    <div class="row gx-5">
+        <div class="col-lg-6">
+            <div id="carouselImagenesProducto" class="carousel slide border rounded shadow-sm" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     {% for img in images %}
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <img src="{{ img.image.url }}" class="d-block w-100 img-fluid" alt="{{ product.name }}">
+                            <img src="{{ img.image.url }}" class="d-block w-100 img-fluid rounded" alt="{{ product.name }}">
                         </div>
                     {% endfor %}
                 </div>
@@ -25,28 +24,98 @@
                 </button>
                 {% endif %}
             </div>
+            
+            <div class="d-flex justify-content-center mt-3">
+                {% for img in images %}
+                    <img src="{{ img.image.url }}" class="img-thumbnail me-2" style="width: 80px; cursor: pointer;" alt="Miniatura {{ forloop.counter }}">
+                {% endfor %}
+            </div>
         </div>
-        <!-- Detalles del producto a la derecha -->
-        <div class="col-md-6 order-md-2 order-1">
-            <h2 class="fw-bold mb-3">{{ product.name }}</h2>
-            {% if product.description %}
-                <p class="text-muted mb-4">{{ product.description }}</p>
-            {% else %}
-                <p class="text-muted mb-4">Sin descripción disponible.</p>
-            {% endif %}
-            <p class="fs-4 fw-bold text-success mb-3">${{ product.price }}</p>
-            <p class="mb-2"><span class="fw-semibold">Stock:</span> {{ product.stock }}</p>
-            {% if product.category %}
-                <p class="mb-2"><span class="fw-semibold">Categoría:</span> {{ product.category.name }}</p>
-            {% endif %}
-            <!-- Botón de acción -->
-            <div class="mt-4">
-                <button class="btn btn-warning btn-lg">
-                    <i class="fas fa-shopping-cart me-2"></i>Agregar al carrito
-                </button>
+
+        <div class="col-lg-6">
+            <div class="p-4 border rounded shadow-sm">
+                <p class="text-muted small mb-2">Categoría: {% if product.category %}<a href="#">{{ product.category.name }}</a>{% else %}Sin categoría{% endif %}</p>
+                <h1 class="fw-bold mb-2">{{ product.name }}</h1>
+                <hr>
+
+                <p class="fs-2 fw-bold text-success mb-1">${{ product.price }}</p>
+                {% if product.stock > 0 %}
+                    <p class="text-success fw-bold mb-3"><i class="fas fa-check-circle me-1"></i>En Stock ({{ product.stock }})</p>
+                {% else %}
+                    <p class="text-danger fw-bold mb-3"><i class="fas fa-times-circle me-1"></i>Agotado</p>
+                {% endif %}
+
+                {% if product.short_description %}
+                    <p class="text-muted">{{ product.short_description }}</p>
+                {% else %}
+                    <p class="text-muted">Sin descripción corta disponible.</p>
+                {% endif %}
+
+                <div class="d-grid gap-2 mt-4">
+                    <button class="btn btn-warning btn-lg fw-bold">
+                        <i class="fas fa-shopping-cart me-2"></i>Añadir al carrito
+                    </button>
+                    <button class="btn btn-outline-primary btn-lg fw-bold">
+                        <i class="fas fa-credit-card me-2"></i>Comprar ahora
+                    </button>
+                </div>
+            </div>
+
+            <div class="card mt-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Información de envío y devolución</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li><i class="fas fa-truck text-muted me-2"></i>Envío estándar: 3-5 días hábiles.</li>
+                        <li><i class="fas fa-undo-alt text-muted me-2"></i>Política de devoluciones de 30 días.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <hr class="my-5">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="fw-bold mb-3">Descripción completa del producto</h3>
+                    {% if product.description %}
+                        <p class="text-muted">{{ product.description }}</p>
+                    {% else %}
+                        <p class="text-muted">No hay una descripción completa disponible para este producto.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <hr class="my-5">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="fw-bold mb-3">Características Principales</h3>
+                    <ul class="list-group list-group-flush">
+                        {% for feature in product.features %}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <i class="fas fa-cogs text-primary me-3 mt-1"></i>
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">{{ feature.name }}</div>
+                                    {{ feature.value }}
+                                </div>
+                            </li>
+                        {% empty %}
+                            <p class="text-muted">No hay características principales listadas.</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+</div>
 {% endblock %}
